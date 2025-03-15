@@ -241,9 +241,11 @@ a{
 }
 
 .menu-list .menu-list-items{
-  padding: 2rem 1rem;
-  font-size: 2rem;
+  padding: 2rem 1.5rem;
+  font-size: 1.5rem;
+  color:#152faf;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  text-align:center;
 }
 
 /* hero banner */
@@ -642,7 +644,7 @@ a{
   background-image:linear-gradient(135deg, rgb(225, 148, 148),rgb(186, 127, 127));
   margin:0rem 0rem;
   position:relative;
-  height:35rem;
+  height:30rem;
 }
 .contact-intro{
   color:#e8dedb;
@@ -689,9 +691,10 @@ a{
   right:15rem;
   width:20rem;
   height:100%;
+  top:0rem;
 }
 .contact-details-text{
-  top:0rem;
+  top:1rem;
   position:absolute;
   left:1rem;
 }

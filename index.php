@@ -1,9 +1,11 @@
 <DOCTYPE! html>
 <?php require_once("./php/feedbackmailer.php"); ?>
+<?php require_once("./php/databaseWorker.php"); ?>
 <html>
         <head>
             <meta charset="UTF-8">
-            <script src="js/script.js"></script>
+            <script src="./js/functions.js"></script>
+            <script src="./js/jquery-3.7.1.min.js"></script>
             <meta name="viewport" content="width=device-width, initial-scale=1.00, maximum-scale=1.00, minimum-scale=.95">
             <link rel="stylesheet" href="./css/style.css">
             <title> The Alley </title>
@@ -20,7 +22,7 @@
                     <div class="menu">
                         <ul class="menu-list">
                             <li class="menu-list-items">
-                                <a class="links" href = "#home">
+                                <a class="links" id="home-link" href = '#home' onmouseover="changeText_Home()" onmouseleave="changeBack_Home()">
                                     Home
                                     <!--Try to put text when you hover over it
                                         put like
@@ -28,19 +30,19 @@
                                 </a>
                             </li>
                             <li class="menu-list-items">
-                                <a class="links" href = "#portfolio">
+                                <a class="links" id="portfolio-link" href = "#portfolio">
                                     Portfolio
                                     <!--Try to put text when you hover over it-->
                                 </a>
                             </li>
                             <li class="menu-list-items">
-                                <a class="links" href = "#socials">
+                                <a class="links" id="socials-link" href = "#socials" onmouseover="changeText_Socials()" onmouseleave="changeBack_Socials()">
                                     Socials + YouTube
                                     <!--Try to put text when you hover over it-->
                                 </a>
                             </li>
                             <li class="menu-list-items">
-                                <a class="links" href="#support">
+                                <a class="links" id="support-link" href="#support"onmouseover="changeText_Support()" onmouseleave="changeBack_Support()">
                                     Support Me
                                     <!--Try to put text when you hover over it
                                         This one will say
@@ -49,7 +51,7 @@
                                 </a>
                             </li>
                             <li class="menu-list-items">
-                                <a class="links" href = "#contact">
+                                <a class="links" id="contact-link" href = "#contact"onmouseover="changeText_Contact()" onmouseleave="changeBack_Contact()">
                                     Contact Me?
                                     <!--Try to put text when you hover over it
                                         Add
@@ -81,7 +83,7 @@
                                 <span style="--i:12;">s</span>
                                 <span style="--i:13;">t</span>
                             </div>
-                            <h1 class="host"> TheHomelessHobo</p>
+                    <h1 class="host"> TheHomelessHobo  </p>
                         </div>
                     </div>
                 </section>
@@ -105,7 +107,7 @@
                             <i>THEM</i>
                         </p>
                         <p class="bio-p5">
-                            <i>)</i>
+                            <i>) <?php dumpArray() ?></i>
                         </p>
                         <p class="bio-p6">
                             ANYWAY, schizophrenic rant aside, I'm an aspiring indie-dev, focused on 2D projects of many genres. 
@@ -148,7 +150,7 @@
                                     <div class="current-project">
                                         <div class="btl">
                                             <a class="links">
-                                                <img class="btl-thumbnail portfolio-thumbnail" src="./Images/BTL.png"
+                                                <img class="btl-thumbnail portfolio-thumbnail" src="./images/BTL.png"
                                                 alt="Cool Picture of Beneath The Light with 3D sound and 4 dimensional topography"></img>
                                             </a> 
                                             <a class="links">
@@ -171,14 +173,15 @@
                                 <div class="portfolio-card">
                                     <div class="old-projects">
                                         <div class="trigger">
-                                            <a class="links" href="https://thehomelesshobo.itch.io/trigger">
-                                                <img class="trigger-thumbnail portfolio-thumbnail" src="./Images/TRIGGERThumbnail.png"
+                                            <?php $triggerID = getID("trigger")?>
+                                            <a class="links" onclick="addVisit(<?php echo json_encode($triggerID, JSON_NUMERIC_CHECK) ?>)" href="https://thehomelesshobo.itch.io/trigger">
+                                                <img class="trigger-thumbnail portfolio-thumbnail" src="./images/TRIGGERThumbnail.png"
                                                     alt="Image of a knight with PTSD, goblin, and big ice giant gal. They're in a forest fighting slimes. Though I guess this is misinformation considering this isn't part of the demo here">
                                                 <!-- <a class="links" href="linktoitch.iopage"  --> 
                                             </a>
-                                            <a class="links" href="./downloads/TRIGGER_DEMO_1.zip" download>
+                                            <a class="links" onclick="addDownload(<?php echo json_encode($triggerID, JSON_NUMERIC_CHECK) ?>)" href="./downloads/TRIGGER_DEMO_1.zip" download>
                                                 <h3 class="center-mid-portfolio">
-                                                    TRIGGER
+                                                    TRIGGER 
                                                 <!-- <a class="links" href="linktoitch.iopage"  --> 
                                                 </h3>
                                             </a>
@@ -188,6 +191,11 @@
                                                 Indefinitely a demo, though it will be picked up one day
                                                 When all parties involved are ready to carry the burden once more..
                                             </p>
+                                            <p class="portfolio-card-stats">
+                                                Downloads: <?php echo getDownloads($triggerID)?>
+                                                <br>
+                                                Itch.io Visits: <?php echo getVisits($triggerID) ?>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -196,7 +204,7 @@
                                 <div class="portfolio-card">
                                     <div class="hidden-teaser">
                                         <a class="links" >
-                                            <img class="unknown-thumbnail portfolio-thumbnail" src="./Images/UnknownGameThumbnail.png"
+                                            <img class="unknown-thumbnail portfolio-thumbnail" src="./images/UnknownGameThumbnail.png"
                                                 alt="Mysteriously mysterious-looking mysterious cool guy in a mysterious trenchcoat and mysterious fedora mysteriously watching from a mysterious distance mysteriously">
                                             </img>
                                         </a>
@@ -244,35 +252,35 @@
                         <ul class="socials-list">
                             <li class="socials-list-items">
                                 <a class="links" href = "https://www.youtube.com/channel/UCTlz8vi70odJOXlpj23nWyQ">
-                                    <img class="socials-logo" src="./Images/youtubelogo.png"
+                                    <img class="socials-logo" src="./images/youtubelogo.png"
                                         alt="Youtube logo-image">
                                     </img>
                                 </a>
                             </li>
                             <li class="socials-list-items">
                                 <a class="links" href = "https://www.instagram.com/thehomelesshobogames/">
-                                    <img class="socials-logo" src="./Images/instagramlogo.png"
+                                    <img class="socials-logo" src="./images/instagramlogo.png"
                                         alt="Instagram logo-image">
                                     </img>
                                 </a>
                             </li>
                             <li class="socials-list-items">
                                 <a class="links" href = "https://www.tiktok.com/@thehomelesshobogames?lang=en">
-                                    <img class="socials-logo" src="./Images/tiktoklogo.png"
+                                    <img class="socials-logo" src="./images/tiktoklogo.png"
                                         alt="TikTok logo-image">
                                     </img>
                                 </a>
                             </li>
                             <li class="socials-list-items">
                                 <a class="links" href = "https://x.com/HomelessHoboDev">
-                                    <img class="socials-logo" src="./Images/twitterlogo.png"
+                                    <img class="socials-logo" src="./images/twitterlogo.png"
                                         alt="Twitter logo-image">
                                     </img>
                                 </a>
                             </li>
                             <li class="socials-list-items">
                                 <a class="links" href = "https://www.reddit.com/user/homelesshobodev/">
-                                    <img class="socials-logo" src="./Images/redditlogo.png"
+                                    <img class="socials-logo" src="./images/redditlogo.png"
                                         alt="Reddit logo-image">
                                     </img>
                                 </a>
@@ -288,7 +296,7 @@
                     </h1>
                     <ul class="patreon-zone">
                         <a class="links" href = "https://www.patreon.com/TheHomelessHobo">
-                            <img class="patreon-logo" src="./Images/patreonlogo.png"
+                            <img class="patreon-logo" src="./images/patreonlogo.png"
                                 alt="Reddit logo-image">
                             </img>
                         </a>
