@@ -58,7 +58,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
         $f_feedback = test_input($_POST["f_feedback"]);
     }
 
-    //Code to send the email to thehomelesshobogames@gmail.com 
+    //Code to send the email to ##############
     //then reset all fields and email
     if($send_email)
     {
